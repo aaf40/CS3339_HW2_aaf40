@@ -2,6 +2,14 @@
 #include<string>
 #include<bitset>
 
+void printFormattedBits(unsigned int bits) {
+    std::bitset<32> bitset(bits);
+    std::string bitString = bitset.to_string();
+    std::cout << "Sign: " << bitString.substr(0, 1) << " | ";
+    std::cout << "Exponent: " << bitString.substr(1, 8) << " | ";
+    std::cout << "Mantissa: " << bitString.substr(9, 23) << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         std::cout << "Error: Program requires exactly two floating-point values as input." << std::endl;
@@ -18,19 +26,26 @@ int main(int argc, char* argv[]) {
     std::bitset<32> loopIncrementBits(*loopIncrementBitsPtr);
 
     std::cout << "Loop Bound Bits: " << loopBoundBits << std::endl;
+    printFormattedBits(*loopBoundBitsPtr);
     std::cout << "Loop Increment Bits: " << loopIncrementBits << std::endl;
+    printFormattedBits(*loopIncrementBitsPtr);
 
-    // Extracting the exponent bits and converting them to an integer
     unsigned int loopBoundExponent = ((*loopBoundBitsPtr >> 23) & 0xFF);
     unsigned int loopIncrementExponent = ((*loopIncrementBitsPtr >> 23) & 0xFF);
 
-    // Calculating the difference in exponents
     int exponentDifference = loopBoundExponent - loopIncrementExponent;
 
-    // Determining potential for overflow
     if (exponentDifference >= 24) {
         std::cout << "Warning: Possible overflow!" << std::endl;
-        // Placeholder for calculating and displaying the overflow threshold
+
+        unsigned int thresholdExponent = loopBoundExponent - 24;
+        unsigned int thresholdBits = (thresholdExponent << 23); 
+        float* thresholdPtr = reinterpret_cast<float*>(&thresholdBits);
+        float overflowThreshold = *thresholdPtr;
+
+        std::cout << "Overflow threshold: " << overflowThreshold << std::endl;
+        std::bitset<32> thresholdBitset(thresholdBits);
+        std::cout << "Threshold Bits: " << thresholdBitset << std::endl;
     } else {
         std::cout << "No overflow detected." << std::endl;
     }
