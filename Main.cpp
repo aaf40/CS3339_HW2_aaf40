@@ -5,9 +5,9 @@
 void printFormattedBits(unsigned int bits) {
     std::bitset<32> bitset(bits);
     std::string bitString = bitset.to_string();
-    std::cout << "Sign: " << bitString.substr(0, 1) << " | ";
-    std::cout << "Exponent: " << bitString.substr(1, 8) << " | ";
-    std::cout << "Mantissa: " << bitString.substr(9, 23) << std::endl;
+    std::cout << bitString.substr(0, 1) << " ";
+    std::cout <<  bitString.substr(1, 8) << " ";
+    std::cout <<  bitString.substr(9, 23) << std::endl;
 }
 
 int main(int argc, char* argv[]) {
