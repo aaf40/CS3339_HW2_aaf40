@@ -6,13 +6,15 @@ void printFormattedBits(unsigned int bits, const std::string &label)
 {
     std::bitset<32> bitset(bits);
     std::string bitString = bitset.to_string();
-    if (!label.empty()) {
+    if (!label.empty())
+    {
         std::cout << label << ": " << bitString.substr(0, 1) << " " << bitString.substr(1, 8) << " " << bitString.substr(9, 23) << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << bitString.substr(0, 1) << " " << bitString.substr(1, 8) << " " << bitString.substr(9, 23) << std::endl;
     }
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -41,14 +43,16 @@ int main(int argc, char *argv[])
         std::cout << "\nWarning: Possible overflow!" << std::endl;
         std::cout << "Overflow threshold:" << std::endl;
 
-        unsigned int thresholdExponent = loopBoundExponent - 24;
+        
+        unsigned int thresholdExponent = 151; 
+        std::cout << thresholdExponent << std::endl;
+    
         unsigned int thresholdBits = (thresholdExponent << 23);
+        std::cout << thresholdBits << std::endl;
         float *thresholdPtr = reinterpret_cast<float *>(&thresholdBits);
         float overflowThreshold = *thresholdPtr;
 
         std::cout << "        " << overflowThreshold << std::endl;
-         std::cout << "        ";
-
         printFormattedBits(thresholdBits, "");
     }
     else
