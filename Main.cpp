@@ -1,3 +1,4 @@
+// To run the code
 #include <iostream>
 #include <string>
 #include <bitset>
@@ -27,11 +28,13 @@ int main(int argc, char *argv[])
     float loopBound = std::stof(argv[1]);
     float loopIncrement = std::stof(argv[2]);
 
+
     unsigned int *loopBoundBitsPtr = reinterpret_cast<unsigned int *>(&loopBound);
     unsigned int *loopIncrementBitsPtr = reinterpret_cast<unsigned int *>(&loopIncrement);
 
-    printFormattedBits(*loopBoundBitsPtr, "Loop Bound");
-    printFormattedBits(*loopIncrementBitsPtr, "Loop Counter");
+    std::cout <<  "\n";
+    printFormattedBits(*loopBoundBitsPtr, "loop bound");
+    printFormattedBits(*loopIncrementBitsPtr, "loop counter");
 
     unsigned int loopBoundExponent = ((*loopBoundBitsPtr >> 23) & 0xFF);
     unsigned int loopIncrementExponent = ((*loopIncrementBitsPtr >> 23) & 0xFF);
@@ -45,14 +48,15 @@ int main(int argc, char *argv[])
 
         
         unsigned int thresholdExponent = 151; 
-        std::cout << thresholdExponent << std::endl;
+        // std::cout << thresholdExponent << std::endl; debugging cout
     
         unsigned int thresholdBits = (thresholdExponent << 23);
-        std::cout << thresholdBits << std::endl;
+        // std::cout << thresholdBits << std::endl; debugging cout
         float *thresholdPtr = reinterpret_cast<float *>(&thresholdBits);
         float overflowThreshold = *thresholdPtr;
 
         std::cout << "        " << overflowThreshold << std::endl;
+        std::cout << "        ";
         printFormattedBits(thresholdBits, "");
     }
     else
