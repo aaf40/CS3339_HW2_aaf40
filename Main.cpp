@@ -1,4 +1,3 @@
-// To run the code
 #include <iostream>
 #include <string>
 #include <bitset>
